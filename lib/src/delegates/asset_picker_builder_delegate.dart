@@ -103,6 +103,7 @@ abstract class AssetPickerBuilderDelegate<A, P> {
   /// Whether the picker is under the single asset mode.
   /// 选择器是否为单选模式
   bool get isSingleAssetMode => provider.maxAssets == 1;
+  bool get isNoMaxMode => provider.maxAssets == 9999;
 
   /// Space between assets item widget.
   /// 资源部件之间的间隔
@@ -326,7 +327,7 @@ abstract class AssetPickerBuilderDelegate<A, P> {
       ),
       color: theme.primaryColor.withOpacity(isAppleOS ? 0.90 : 1.0),
       child: Row(children: <Widget>[
-        if (!isSingleAssetMode || !isAppleOS) previewButton(context),
+        // if (!isSingleAssetMode || !isAppleOS) previewButton(context),
         if (isAppleOS) const Spacer(),
         if (isAppleOS) confirmButton(context),
       ]),
@@ -750,10 +751,13 @@ class DefaultAssetPickerBuilderDelegate
             borderRadius: BorderRadius.circular(3.0),
           ),
           child: Text(
-            provider.isSelectedNotEmpty && !isSingleAssetMode
+            isNoMaxMode
                 ? '${Constants.textDelegate.confirm}'
-                    '(${provider.selectedAssets.length}/${provider.maxAssets})'
-                : Constants.textDelegate.confirm,
+                    '(${provider.selectedAssets.length})'
+                : provider.isSelectedNotEmpty
+                    ? '${Constants.textDelegate.confirm}'
+                        '(${provider.selectedAssets.length}/${provider.maxAssets})'
+                    : Constants.textDelegate.confirm,
             style: TextStyle(
               color: provider.isSelectedNotEmpty
                   ? theme.textTheme.bodyText1?.color
@@ -805,7 +809,7 @@ class DefaultAssetPickerBuilderDelegate
                   Positioned.fill(
                     child: RepaintBoundary(child: state.completedWidget),
                   ),
-                  selectedBackdrop(context, index, asset),
+                  // selectedBackdrop(context, index, asset),
                   if (type == SpecialImageType.gif) // 如果为GIF则显示标识
                     gifIndicator(context, asset),
                   if (asset.type == AssetType.video) // 如果为视频则显示标识
