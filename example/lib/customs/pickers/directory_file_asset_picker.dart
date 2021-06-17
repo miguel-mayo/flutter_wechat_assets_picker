@@ -1,36 +1,49 @@
 ///
 /// [Author] Alex (https://github.com/AlexV525)
-/// [Date] 2020-11-01 02:05
+/// [Date] 2021/5/10 16:44
 ///
 import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import '../constants/extensions.dart';
-import '../constants/screens.dart';
+import '../../constants/screens.dart';
 
 const Color themeColor = Color(0xff00bc56);
 
-class CustomPickerPage extends StatefulWidget {
+const List<String> imagesExtensions = <String>[
+  'jpg',
+  'jpeg',
+  'webp',
+  'gif',
+  'bmp',
+  'wbmp',
+  'tiff',
+  'heic',
+];
+
+class DirectoryFileAssetPicker extends StatefulWidget {
+  const DirectoryFileAssetPicker({Key? key}) : super(key: key);
+
   @override
-  _CustomPickerPageState createState() => _CustomPickerPageState();
+  _DirectoryFileAssetPickerState createState() =>
+      _DirectoryFileAssetPickerState();
 }
 
-class _CustomPickerPageState extends State<CustomPickerPage> {
+class _DirectoryFileAssetPickerState extends State<DirectoryFileAssetPicker>
+    with AutomaticKeepAliveClientMixin {
   final List<File> fileList = <File>[];
 
   bool isDisplayingDetail = true;
 
-  ThemeData get currentTheme => context.themeData;
+  ThemeData get currentTheme => Theme.of(context);
 
   Future<void> callPicker() async {
     final FileAssetPickerProvider provider = FileAssetPickerProvider(
@@ -46,7 +59,7 @@ class _CustomPickerPageState extends State<CustomPickerPage> {
       context,
       rootNavigator: true,
     ).push<List<File>>(
-      SlidePageTransitionBuilder<List<File>>(
+      AssetPickerPageRoute<List<File>>(
         builder: picker,
         transitionCurve: Curves.easeIn,
         transitionDuration: const Duration(milliseconds: 300),
@@ -139,10 +152,10 @@ class _CustomPickerPageState extends State<CustomPickerPage> {
               child: Stack(
                 children: <Widget>[
                   Positioned.fill(child: _selectedAssetWidget(index)),
-                  AnimatedPositioned(
+                  AnimatedPositionedDirectional(
                     duration: kThemeAnimationDuration,
                     top: isDisplayingDetail ? 6.0 : -30.0,
-                    right: isDisplayingDetail ? 6.0 : -30.0,
+                    end: isDisplayingDetail ? 6.0 : -30.0,
                     child: _selectedAssetDeleteButton(index),
                   ),
                 ],
@@ -242,57 +255,54 @@ class _CustomPickerPageState extends State<CustomPickerPage> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
+  @mustCallSuper
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: DefaultTextStyle.merge(
-            style: const TextStyle(fontSize: 18),
-            textAlign: TextAlign.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                paddingText(
-                  'This is a custom picker built for `File`.\n'
-                  'By browsing this picker, we want you to know that '
-                  'you can build your own picker components using '
-                  'the entity\'s type you desired.',
-                ),
-                paddingText(
-                  'In this page, picker will grab files from '
-                  '`getExternalStorageDirectory`, Then check whether '
-                  'it contains images.',
-                ),
-                paddingText(
-                  'Put files into the path to see how this custom picker work.',
-                ),
-                TextButton(
-                  onPressed: callPicker,
-                  child: const Text(
-                    '🎁 Call the Picker',
-                    style: TextStyle(fontSize: 22),
+    super.build(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Directory+File picker')),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: DefaultTextStyle.merge(
+              style: const TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  paddingText(
+                    'This is a custom picker built for `File`.\n'
+                    'By browsing this picker, we want you to know that '
+                    'you can build your own picker components using '
+                    'the entity\'s type you desired.',
                   ),
-                ),
-              ],
+                  paddingText(
+                    'In this page, picker will grab files from '
+                    '`getExternalStorageDirectory`, Then check whether '
+                    'it contains images.',
+                  ),
+                  paddingText(
+                    'Put files into the path to see how this custom picker work.',
+                  ),
+                  TextButton(
+                    onPressed: callPicker,
+                    child: const Text(
+                      '🎁 Call the Picker',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        selectedAssetsWidget,
-      ],
+          selectedAssetsWidget,
+        ],
+      ),
     );
   }
 }
-
-const List<String> imagesExtensions = <String>[
-  'jpg',
-  'jpeg',
-  'webp',
-  'gif',
-  'bmp',
-  'wbmp',
-  'tiff',
-  'heic',
-];
 
 class FileAssetPickerProvider extends AssetPickerProvider<File, Directory> {
   FileAssetPickerProvider({
@@ -547,6 +557,7 @@ class FileAssetPickerBuilder
       asset,
     );
     return Stack(
+      key: ValueKey<String>(asset.path),
       fit: StackFit.expand,
       children: <Widget>[
         Positioned.fill(child: builder),
@@ -734,7 +745,7 @@ class FileAssetPickerBuilder
         selector: (_, FileAssetPickerProvider p) => p.pathEntityList,
         builder: (_, Map<Directory, Uint8List?> pathEntityList, __) {
           return ListView.separated(
-            padding: const EdgeInsets.only(top: 1.0),
+            padding: const EdgeInsetsDirectional.only(top: 1.0),
             itemCount: pathEntityList.length,
             itemBuilder: (_, int index) => pathEntityWidget(
               context: context,
@@ -742,7 +753,7 @@ class FileAssetPickerBuilder
               index: index,
             ),
             separatorBuilder: (_, __) => Container(
-              margin: const EdgeInsets.only(left: 60.0),
+              margin: const EdgeInsetsDirectional.only(start: 60.0),
               height: 1.0,
               color: theme.canvasColor,
             ),
@@ -764,7 +775,7 @@ class FileAssetPickerBuilder
             child: Container(
               height: appBarItemHeight,
               constraints: BoxConstraints(maxWidth: Screens.width * 0.5),
-              padding: const EdgeInsets.only(left: 12.0, right: 6.0),
+              padding: const EdgeInsetsDirectional.only(start: 12.0, end: 6.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
                 color: theme.dividerColor,
@@ -785,7 +796,7 @@ class FileAssetPickerBuilder
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
+                    padding: const EdgeInsetsDirectional.only(start: 5.0),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -845,9 +856,12 @@ class FileAssetPickerBuilder
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 20.0),
+                  padding: const EdgeInsetsDirectional.only(
+                    start: 15.0,
+                    end: 20.0,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
+                    padding: const EdgeInsetsDirectional.only(end: 10.0),
                     child: Text(
                       path.path,
                       style: const TextStyle(fontSize: 18.0),
@@ -1031,6 +1045,11 @@ class FileAssetPickerBuilder
   Widget videoIndicator(BuildContext context, File asset) {
     return const SizedBox.shrink();
   }
+
+  @override
+  int findChildIndexBuilder(String id, List<File> currentAssets) {
+    return currentAssets.indexWhere((File file) => file.path == id);
+  }
 }
 
 class FileAssetPickerViewerProvider extends AssetPickerViewerProvider<File> {
@@ -1060,6 +1079,7 @@ class FileAssetPickerViewerBuilderDelegate
           currentIndex: currentIndex,
           selectedAssets: selectedAssets,
           selectorProvider: selectorProvider,
+          maxAssets: selectorProvider?.maxAssets,
         );
 
   bool isDisplayingDetail = true;
@@ -1153,7 +1173,7 @@ class FileAssetPickerViewerBuilderDelegate
       right: 0.0,
       height: Screens.bottomSafeHeight + bottomDetailHeight,
       child: Container(
-        padding: EdgeInsets.only(bottom: Screens.bottomSafeHeight),
+        padding: EdgeInsetsDirectional.only(bottom: Screens.bottomSafeHeight),
         color: themeData.canvasColor.withOpacity(0.85),
         child: Column(
           children: <Widget>[
@@ -1265,7 +1285,10 @@ class FileAssetPickerViewerBuilderDelegate
       right: 0.0,
       height: Screens.topSafeHeight + kToolbarHeight,
       child: Container(
-        padding: EdgeInsets.only(top: Screens.topSafeHeight, right: 12.0),
+        padding: EdgeInsetsDirectional.only(
+          top: Screens.topSafeHeight,
+          end: 12.0,
+        ),
         color: themeData.canvasColor.withOpacity(0.85),
         child: Row(
           children: <Widget>[
@@ -1300,7 +1323,7 @@ class FileAssetPickerViewerBuilderDelegate
       child: Theme(
         data: themeData,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: themeData.brightness.isDark
+          value: themeData.brightness == Brightness.dark
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark,
           child: Material(
@@ -1447,7 +1470,7 @@ class FileAssetPickerViewerBuilderDelegate
 
   Widget _appleOSSelectButton(bool isSelected, File asset) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
+      padding: const EdgeInsetsDirectional.only(end: 10.0),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -1494,64 +1517,6 @@ class FileAssetPickerViewerBuilderDelegate
         }
       },
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    );
-  }
-}
-
-class SlidePageTransitionBuilder<T> extends PageRoute<T> {
-  SlidePageTransitionBuilder({
-    required this.builder,
-    this.transitionCurve = Curves.easeIn,
-    this.transitionDuration = const Duration(milliseconds: 500),
-  });
-
-  final Widget builder;
-
-  final Curve transitionCurve;
-
-  @override
-  final Duration transitionDuration;
-
-  @override
-  final bool opaque = true;
-
-  @override
-  final bool barrierDismissible = false;
-
-  @override
-  final bool maintainState = true;
-
-  @override
-  Color? get barrierColor => null;
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    return builder;
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(0, 1),
-        end: Offset.zero,
-      ).animate(CurvedAnimation(
-        curve: transitionCurve,
-        parent: animation,
-      )),
-      child: child,
     );
   }
 }

@@ -24,6 +24,7 @@ class AssetPicker<A, P> extends StatelessWidget {
     List<AssetEntity>? selectedAssets,
     int maxAssets = 9,
     int pageSize = 80,
+    int gridThumbSize = Constants.defaultGridThumbSize,
     int pathThumbSize = 80,
     int gridCount = 4,
     RequestType requestType = RequestType.image,
@@ -38,6 +39,7 @@ class AssetPicker<A, P> extends StatelessWidget {
     IndicatorBuilder? loadingIndicatorBuilder,
     SpecialItemPosition specialItemPosition = SpecialItemPosition.none,
     bool allowSpecialItemWhenEmpty = false,
+    bool useRootNavigator = true,
     Curve routeCurve = Curves.easeIn,
     Duration routeDuration = const Duration(milliseconds: 300),
   }) async {
@@ -56,25 +58,24 @@ class AssetPicker<A, P> extends StatelessWidget {
         'Theme and theme color cannot be set at the same time.',
       );
     }
-    if (specialPickerType != null && requestType != RequestType.image) {
-      throw ArgumentError(
-        'specialPickerType and requestType cannot be set at the same time.',
-      );
-    } else {
-      if (specialPickerType == SpecialPickerType.wechatMoment) {
-        requestType = RequestType.common;
+    if (specialPickerType == SpecialPickerType.wechatMoment) {
+      if (requestType != RequestType.image) {
+        throw ArgumentError(
+          'SpecialPickerType.wechatMoment and requestType cannot be set at the same time.',
+        );
       }
+      requestType = RequestType.common;
     }
     if ((specialItemBuilder == null &&
             specialItemPosition != SpecialItemPosition.none) ||
         (specialItemBuilder != null &&
             specialItemPosition == SpecialItemPosition.none)) {
-      throw ArgumentError('Custom item didn\'t set properly.');
+      throw ArgumentError('Custom item did not set properly.');
     }
 
     try {
-      final bool isPermissionGranted = await PhotoManager.requestPermission();
-      if (isPermissionGranted) {
+      final PermissionState _ps = await PhotoManager.requestPermissionExtend();
+      if (_ps == PermissionState.authorized || _ps == PermissionState.limited) {
         final DefaultAssetPickerProvider provider = DefaultAssetPickerProvider(
           maxAssets: maxAssets,
           pageSize: pageSize,
@@ -96,6 +97,7 @@ class AssetPicker<A, P> extends StatelessWidget {
               textDelegate: textDelegate,
               themeColor: themeColor,
               pickerTheme: pickerTheme,
+              gridThumbSize: gridThumbSize,
               previewThumbSize: previewThumbSize,
               specialPickerType: specialPickerType,
               specialItemPosition: specialItemPosition,
@@ -107,18 +109,17 @@ class AssetPicker<A, P> extends StatelessWidget {
         );
         final List<AssetEntity>? result = await Navigator.of(
           context,
-          rootNavigator: true,
+          rootNavigator: useRootNavigator,
         ).push<List<AssetEntity>>(
-          SlidePageTransitionBuilder<List<AssetEntity>>(
+          AssetPickerPageRoute<List<AssetEntity>>(
             builder: picker,
             transitionCurve: routeCurve,
             transitionDuration: routeDuration,
           ),
         );
         return result;
-      } else {
-        return null;
       }
+      return null;
     } catch (e) {
       realDebugPrint('Error when calling assets picker: $e');
       return null;

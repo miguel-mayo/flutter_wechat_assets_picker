@@ -23,32 +23,12 @@ To take a photo or a video for assets, please check the detailed usage in the ex
 
 All UI designs are based on WeChat 7.x, and it will be updated following the WeChat update in anytime.
 
-## Contributors ✨
-
-Many thanks to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://blog.alexv525.com"><img src="https://avatars1.githubusercontent.com/u/15884415?v=4" width="50px;" alt=""/><br /><sub><b>Alex Li</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=AlexV525" title="Code">💻</a> <a href="#design-AlexV525" title="Design">🎨</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=AlexV525" title="Documentation">📖</a> <a href="#example-AlexV525" title="Examples">💡</a> <a href="#ideas-AlexV525" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-AlexV525" title="Maintenance">🚧</a> <a href="#question-AlexV525" title="Answering Questions">💬</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/pulls?q=is%3Apr+reviewed-by%3AAlexV525" title="Reviewed Pull Requests">👀</a></td>
-    <td align="center"><a href="https://www.kikt.top"><img src="https://avatars0.githubusercontent.com/u/14145407?v=4" width="50px;" alt=""/><br /><sub><b>Caijinglong</b></sub></a><br /><a href="#example-CaiJingLong" title="Examples">💡</a> <a href="#ideas-CaiJingLong" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/SchnMar"><img src="https://avatars3.githubusercontent.com/u/12902321?v=4" width="50px;" alt=""/><br /><sub><b>Marcel Schneider</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3ASchnMar" title="Bug reports">🐛</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=SchnMar" title="Code">💻</a> <a href="#ideas-SchnMar" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/ganlanshu0211"><img src="https://avatars0.githubusercontent.com/u/9670379?v=4" width="50px;" alt=""/><br /><sub><b>ganlanshu0211</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3Aganlanshu0211" title="Bug reports">🐛</a> <a href="#ideas-ganlanshu0211" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/JasonHezz"><img src="https://avatars3.githubusercontent.com/u/15358765?v=4" width="50px;" alt=""/><br /><sub><b>JasonHezz</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3AJasonHezz" title="Bug reports">🐛</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=JasonHezz" title="Code">💻</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-This project follows the
-[all-contributors](https://github.com/all-contributors/all-contributors) specification.
-Contributions of any kind welcomed!!
+*Note:* You can file PRs to create your own implementation if you found your implementation might be useful for others.
+See [Contribute custom implementations](example/lib/customs/CONTRIBUTING.md) for more details.
 
 ## Category 🗂
 
-* [Migration Guide](#migration-guide-)
+* [Migration Guide](#migration-guide-%EF%B8%8F)
 * [Features](#features-)
 * [Screenshots](#screenshots-)
 * [Preparing for use](#preparing-for-use-)
@@ -65,8 +45,8 @@ Contributions of any kind welcomed!!
   * [Customize with your own type or UI](#customize-with-your-own-type-or-ui)
 * [Classes Introduction](#classes-introduction-)
   * [`AssetEntity`](#assetentity)
-* [Frequent asked question](#frequent-asked-question-)
-  * [Version resolve conflict with `xxx` (e.g. `dartx`)](#version-resolve-conflict-with-xxx-eg-dartx)
+* [Frequently asked question](#frequently-asked-question-)
+  * [Build failed with `Unresolved reference: R`](#build-failed-with-unresolved-reference-r)
   * [How can I get path from the `AssetEntity` to integrate with `File` object, upload or edit?](#how-can-i-get-path-from-the-assetentity-to-integrate-with-file-object-upload-or-edit)
   * [How can I change the name of "Recent" or other entities name/properties?](#how-can-i-change-the-name-of-recent-or-other-entities-nameproperties)
   * [Create `AssetEntity` from `File` or `Uint8List` (rawData)](#create-assetentity-from-file-or-uint8list-rawdata)
@@ -78,21 +58,22 @@ See [Migration Guide](guides/migration_guide.md).
 
 ## Features ✨
 
-- [x] ♻️ Fully implementable with delegate override
-- [x] 💚 99% simillar to WeChat style
-- [x] ⚡️ Adjustable performance according to parameters
-- [x] 📷 Image asset support
-  - [x] 🔬HEIC/HEIF Image type support
-- [x] 🎥 Video asset support
-- [x] 🎶 Audio asset support
-- [x] 1️⃣ Single asset mode
-- [x] 💱 i18n support
-- [x] ➕ Special item builder (prepend/append) support
-- [x] 🗂 Custom sort path delegate support
-- [x] 📝 Custom text delegate support
-- [x] ⏳ Custom filter options support ( `photo_manager` )
-- [x] 🎏 Custom theme entirely
-- [x] 💻 MacOS support
+- ♻️ Fully implementable with delegates override
+- 💚 99% simillar to WeChat style
+- ⚡️ Adjustable performance according to parameters
+- 📷 Image asset support
+  - 🔬 HEIC/HEIF Image type support
+- 🎥 Video asset support
+- 🎶 Audio asset support
+- 1️⃣ Single asset mode
+- 💱 i18n support
+  - ⏪ RTL language support
+- ➕ Special item builder (prepend/append) support
+- 🗂 Custom sort path delegate support
+- 📝 Custom text delegate support
+- ⏳ Custom filter options support ( `photo_manager` )
+- 🎏 Custom theme entirely
+- 💻 MacOS support
 
 ## Screenshots 📸
 
@@ -179,10 +160,11 @@ platform :osx, '10.15'
 | selectedAssets            | `List<AssetEntity>?`        | Selected assets. Prevent duplicate selection. If you don't need to prevent duplicate selection, just don't pass it. | `null`                              |
 | maxAssets                 | `int`                       | Maximum asset that the picker can pick.                      | 9                                   |
 | pageSize                  | `int?`                      | Number of assets per page. **Must be a multiple of `gridCount`**. | 320 (80 * 4)                        |
-| pathThumbSize             | `int`                       | Thumbnail size.                                              | 80                                  |
+| gridThumbSize             | `int`                       | Thumbnail size for the grid's item.                          | 200                                 |
+| pathThumbSize             | `int`                       | Thumbnail size for the path selector.                        | 80                                  |
+| previewThumbSize          | `List<int>?`                | Preview thumbnail size in the viewer.                        | `null`                              |
 | gridCount                 | `int`                       | Grid count in picker.                                        | 4                                   |
 | requestType               | `RequestType`               | Request type for picker.                                     | `RequestType.image`                 |
-| previewThumbSize          | `List<int>?`                | Preview thumbnail size in the viewer.                        | `null`                              |
 | specialPickerType         | `SpacialPickerType?`        | Provides the option to integrate a custom picker type.       | `null`                              |
 | themeColor                | `Color?`                    | Main theme color for the picker.                             | `Color(0xff00bc56)`                 |
 | pickerTheme               | `ThemeData?`                | Theme data provider for the picker and the viewer.           | `null`                              |
@@ -235,9 +217,9 @@ AssetPicker.unregisterObserve(); // Unregister callback.
 ### Customize with your own type or UI
 
 `AssetPickerBuilderDelegate`, `AssetPickerViewerBuilderDelegate`, `AssetPickerProvider` and
-`AssetPickerViewerProvider` are all exposed and overridable. You can extends them and use your own
-type with generic type <A: Asset, P: Path>, then implement abstract methods. See the `Custom` page
-in the example which implements a picker with <File, Directory>.
+`AssetPickerViewerProvider` are all exposed and overridable. You can extend them and use your own
+type with generic type `<A: Asset, P: Path>`, then implement abstract methods. See the `Custom` page
+in the example which has an implementation based on `<File, Directory>` types.
 
 ## Classes Introduction 💭
 
@@ -327,23 +309,21 @@ Future<String> getMediaUrl();
 Future<AssetEntity> refreshProperties() async;
 ```
 
-## Frequent asked question ❔
+## Frequently asked question ❔
 
-### Version resolve conflict with `xxx` (e.g. `dartx`)
+### Build failed with `Unresolved reference: R`
 
-For some reasons `dartx` or other packages may require a different version than yours. If you're facing this issue, and the error looks like:
+```groovy
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerDeleteManager.kt: (116, 36): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerDeleteManager.kt: (119, 36): Unresolved reference: createTrashRequest
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerPlugin.kt: (341, 84): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\utils\Android30DbUtils.kt: (34, 34): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\utils\IDBUtils.kt: (27, 67): Unresolved reference: R
 
+FAILURE: Build failed with an exception.
 ```
-Because dartx >=0.2.0 <0.5.0 depends on collection >=1.14.11 <1.15.0 and every version of flutter from sdk depends on collection 1.15.0-nullsafety, dartx >=0.2.0 <0.5.0 is incompatible with flutter from sdk.
-So, because wechat_assets_picker_demo depends on both flutter any from sdk and dartx ^0.4.2, version solving failed.
-```
 
-Please add the code below to make it work.
-
-```yaml
-dependency_overrides:
-  dartx: ^0.4.2
-```
+Run `flutter clean` first.
 
 ### How can I get path from the `AssetEntity` to integrate with `File` object, upload or edit?
 
@@ -411,6 +391,38 @@ W/Glide   (21133): Failed to find GeneratedAppGlideModule. You should include an
 ```
 
 `Glide` needs annotation to keep singleton, prevent conflict between instances and versions, so while the photo manager uses `Glide` to implement image features, the project which import this should define its own `AppGlideModule`. See [Android](#android) section for implementation.
+
+## Contributors ✨
+
+Many thanks to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://blog.alexv525.com"><img src="https://avatars1.githubusercontent.com/u/15884415?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Alex Li</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=AlexV525" title="Code">💻</a> <a href="#design-AlexV525" title="Design">🎨</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=AlexV525" title="Documentation">📖</a> <a href="#example-AlexV525" title="Examples">💡</a> <a href="#ideas-AlexV525" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-AlexV525" title="Maintenance">🚧</a> <a href="#question-AlexV525" title="Answering Questions">💬</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/pulls?q=is%3Apr+reviewed-by%3AAlexV525" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://www.kikt.top"><img src="https://avatars0.githubusercontent.com/u/14145407?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Caijinglong</b></sub></a><br /><a href="#example-CaiJingLong" title="Examples">💡</a> <a href="#ideas-CaiJingLong" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/SchnMar"><img src="https://avatars3.githubusercontent.com/u/12902321?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Marcel Schneider</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3ASchnMar" title="Bug reports">🐛</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=SchnMar" title="Code">💻</a> <a href="#ideas-SchnMar" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/ganlanshu0211"><img src="https://avatars0.githubusercontent.com/u/9670379?v=4?s=50" width="50px;" alt=""/><br /><sub><b>ganlanshu0211</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3Aganlanshu0211" title="Bug reports">🐛</a> <a href="#ideas-ganlanshu0211" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/JasonHezz"><img src="https://avatars3.githubusercontent.com/u/15358765?v=4?s=50" width="50px;" alt=""/><br /><sub><b>JasonHezz</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3AJasonHezz" title="Bug reports">🐛</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=JasonHezz" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/yanivshaked"><img src="https://avatars.githubusercontent.com/u/13107481?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Yaniv Shaked</b></sub></a><br /><a href="#translation-yanivshaked" title="Translation">🌍</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=yanivshaked" title="Code">💻</a> <a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3Ayanivshaked" title="Bug reports">🐛</a> <a href="#maintenance-yanivshaked" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/avi-yadav"><img src="https://avatars.githubusercontent.com/u/7314430?v=4?s=50" width="50px;" alt=""/><br /><sub><b>avi-yadav</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=avi-yadav" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Letalus"><img src="https://avatars.githubusercontent.com/u/41230136?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Letalus</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/issues?q=author%3ALetalus" title="Bug reports">🐛</a> <a href="#translation-Letalus" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/greymag"><img src="https://avatars.githubusercontent.com/u/1502131?v=4?s=50" width="50px;" alt=""/><br /><sub><b>greymag</b></sub></a><br /><a href="#translation-greymag" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/NaikSoftware"><img src="https://avatars.githubusercontent.com/u/4218994?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Nickolay Savchenko</b></sub></a><br /><a href="#design-NaikSoftware" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/KosukeSaigusa"><img src="https://avatars.githubusercontent.com/u/13669049?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Kosuke Saigusa</b></sub></a><br /><a href="#translation-KosukeSaigusa" title="Translation">🌍</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+This project follows the
+[all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcomed!!
 
 ## Acknowledgement
 
