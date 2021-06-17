@@ -19,9 +19,12 @@ Language: [English](README.md) | 中文简体
 
 所有的界面细节基于 微信 7.x 版本，将在微信版本更新后随时进行跟进。
 
+**贴士：** 如果你觉得你的自定义实现会在某些程度上帮助其他人实现他们的需求，你可以通过 PR 提交你的实现。
+更多信息请参考 [贡献自定义实现](example/lib/customs/CONTRIBUTING.md) 。
+
 ## 目录 🗂
 
-* [迁移指南](#迁移指南-)
+* [迁移指南](#迁移指南-%EF%B8%8F)
 * [特性](#特性-)
 * [截图](#截图-)
 * [准备工作](#准备工作-)
@@ -39,7 +42,7 @@ Language: [English](README.md) | 中文简体
 * [类介绍](#类介绍-)
   * [`AssetEntity`](#assetentity)
 * [常见问题](#常见问题-)
-  * [`xxx` 版本获取冲突 (例如 `dartx`)](#xxx-版本获取冲突-例如-dartx)
+  * [编译时报错 `Unresolved reference: R`](#编译时报错-unresolved-reference-r)
   * [如何获取资源的路径以进行上传或编辑等操作的整合？](#如何获取资源的路径以进行上传或编辑等操作的整合)
   * [如何更改 'Recent' 或其他路径的名称或属性？](#如何更改-recent-或其他路径的名称或属性)
   * [从 `File` 或 `Uint8List` 创建 `AssetEntity` 的方法](#从-file-或-uint8list-创建-assetentity-的方法)
@@ -51,21 +54,22 @@ Language: [English](README.md) | 中文简体
 
 ## 特性 ✨
 
-- [x] ♻️ 支持基于代理重载的全量自定义
-- [x] 💚 99% 的微信风格
-- [x] ⚡️ 根据参数可调的性能优化
-- [x] 📷 图片资源支持
-  - [x] 🔬HEIC 格式图片支持
-- [x] 🎥 视频资源支持
-- [x] 🎶 音频资源支持
-- [x] 1️⃣ 单资源模式
-- [x] 💱 国际化支持
-- [x] ➕ 特殊 widget 构建支持（前置/后置）
-- [x] 🗂 自定义路径排序支持
-- [x] 📝 自定义文本构建支持
-- [x] ⏳ 自定义筛选规则支持（ `photo_manager` ）
-- [x] 🎏 完整的自定义主题
-- [x] 💻 支持 MacOS
+- ♻️ 支持基于代理重载的全量自定义
+- 💚 99% 的微信风格
+- ⚡️ 根据参数可调的性能优化
+- 📷 图片资源支持
+  - 🔬 HEIC/HEIF 格式图片支持
+- 🎥 视频资源支持
+- 🎶 音频资源支持
+- 1️⃣ 单资源模式
+- 💱 国际化支持
+  - ⏪ RTL 语言支持
+- ➕ 特殊 widget 构建支持（前置/后置）
+- 🗂 自定义路径排序支持
+- 📝 自定义文本构建支持
+- ⏳ 自定义筛选规则支持（ `photo_manager` ）
+- 🎏 完整的自定义主题
+- 💻 支持 MacOS
 
 ## 截图 📸
 
@@ -153,10 +157,11 @@ platform :ios, '9.0'
 | selectedAssets            | `List<AssetEntity>?`   | 已选的资源。确保不重复选择。如果你允许重复选择，请将其置空。 | `null`              |
 | maxAssets                 | `int`                  | 最多选择的图片数量                      | 9                   |
 | pageSize                  | `int`                  | 分页加载时每页加载的资源数量。**必须为网格数的倍数。** 设置为`null`可以取消分页。 | 320 (80 * 4) |
-| pathThumbSize             | `int`                  | 选择器的缩略图大小                      | 80                  |
+| gridThumbSize             | `int`                  | 预览网格的缩略图大小                     | 200                  |
+| pathThumbSize             | `int`                  | 路径选择器的缩略图大小                    | 80                  |
+| previewThumbSize          | `List<int>?`           | 预览时图片的缩略图大小                    | `null`                 |
 | gridCount                 | `int`                  | 选择器网格数量                        | 4                   |
 | requestType               | `RequestType`          | 选择器选择资源的类型                    | `RequestType.image` |
-| previewThumbSize          | `List<int>?`           | 预览时图片的缩略图大小                    | `null`                 |
 | specialPickerType         | `SpecialPickerType?`   | 提供一些特殊的选择器类型以整合非常规的选择行为 | `null` |
 | themeColor                | `Color?`               | 选择器的主题色  | `Color(0xff00bc56)` |
 | pickerTheme               | `ThemeData?`           | 选择器的主题提供，包括查看器 | `null` |
@@ -206,12 +211,12 @@ AssetPicker.registerObserve(); // 注册回调
 AssetPicker.unregisterObserve(); // 取消注册回调
 ```
 
-### Customize with your own type or UI
+### 自定义类型或 UI
 
 `AssetPickerBuilderDelegate`、`AssetPickerViewerBuilderDelegate`、`AssetPickerProvider` 及
-`AssetPickerViewerProvider` 均已暴露且可重载。使用者可以使用自定义的泛型类型 <A: 资源, P: 路径>，配合继承与
-重载，实现对应抽象类和类中的方法。更多用法请查看示例中的 `Custom` 页面，该页面实现了以 <File, Directory> 为
-类型基础的选择器。
+`AssetPickerViewerProvider` 均已暴露且可重载。使用者可以使用自定义的泛型类型 `<A: 资源, P: 路径>`，
+配合继承与重载，实现对应抽象类和类中的方法。更多用法请查看示例中的 `Custom` 页面，该页面包含一个以
+`<File, Directory>` 为类型基础的选择器。
 
 ## 类介绍 💭
 
@@ -303,21 +308,19 @@ Future<AssetEntity> refreshProperties() async;
 
 ## 常见问题 ❔
 
-### `xxx` 版本获取冲突 (例如 `dartx`)
+### 编译时报错 `Unresolved reference: R`
 
-`dartx` 或其他依赖可能因为某些原因使用了与你的项目不同的版本。如果你遇到了与下面内容类似的错误：:
+```groovy
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerDeleteManager.kt: (116, 36): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerDeleteManager.kt: (119, 36): Unresolved reference: createTrashRequest
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\PhotoManagerPlugin.kt: (341, 84): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\utils\Android30DbUtils.kt: (34, 34): Unresolved reference: R
+e: <path>\photo_manager-x.y.z\android\src\main\kotlin\top\kikt\imagescanner\core\utils\IDBUtils.kt: (27, 67): Unresolved reference: R
 
+FAILURE: Build failed with an exception.
 ```
-Because dartx >=0.2.0 <0.5.0 depends on collection >=1.14.11 <1.15.0 and every version of flutter from sdk depends on collection 1.15.0-nullsafety, dartx >=0.2.0 <0.5.0 is incompatible with flutter from sdk.
-So, because wechat_assets_picker_demo depends on both flutter any from sdk and dartx ^0.4.2, version solving failed.
-```
 
-将以下代码添加至你的 `pubspec.yaml`：
-
-```yaml
-dependency_overrides:
-  dartx: ^0.4.2
-```
+请执行 `flutter clean`。
 
 ### 如何获取资源的路径以进行上传或编辑等操作的整合？
 
