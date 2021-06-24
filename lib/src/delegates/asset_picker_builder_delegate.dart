@@ -807,7 +807,7 @@ class DefaultAssetPickerBuilderDelegate
           ),
         ),
         const Center(child: Icon(Icons.audiotrack)),
-        selectedBackdrop(context, index, asset),
+        // selectedBackdrop(context, index, asset),
         audioIndicator(context, asset),
       ],
     );
@@ -882,7 +882,7 @@ class DefaultAssetPickerBuilderDelegate
             ),
           ),
         ),
-        selectedBackdrop(context, index, asset),
+        // selectedBackdrop(context, index, asset),
         if (type == SpecialImageType.gif) // 如果为GIF则显示标识
           gifIndicator(context, asset),
         if (asset.type == AssetType.video) // 如果为视频则显示标识
