@@ -172,6 +172,9 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   /// 选择器是否为单选模式
   bool get isSingleAssetMode => provider.maxAssets == 1;
 
+  /// When no max value provided
+  bool get isNoMaxMode => provider.maxAssets == 9999;
+
   /// Space between assets item widget.
   /// 资源部件之间的间隔
   double get itemSpacing => 2;
@@ -487,7 +490,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
       color: theme.primaryColor.withOpacity(isAppleOS ? 0.90 : 1),
       child: Row(
         children: <Widget>[
-          if (!isSingleAssetMode || !isAppleOS) previewButton(context),
+          // if (!isSingleAssetMode || !isAppleOS) previewButton(context),
           if (isAppleOS) const Spacer(),
           if (isAppleOS) confirmButton(context),
         ],
@@ -1211,10 +1214,13 @@ class DefaultAssetPickerBuilderDelegate
             borderRadius: BorderRadius.circular(3),
           ),
           child: ScaleText(
-            provider.isSelectedNotEmpty && !isSingleAssetMode
+            isNoMaxMode
                 ? '${Constants.textDelegate.confirm}'
-                    ' (${provider.selectedAssets.length}/${provider.maxAssets})'
-                : Constants.textDelegate.confirm,
+                    '(${provider.selectedAssets.length})'
+                : provider.isSelectedNotEmpty
+                    ? '${Constants.textDelegate.confirm}'
+                        '(${provider.selectedAssets.length}/${provider.maxAssets})'
+                    : Constants.textDelegate.confirm,
             style: TextStyle(
               color: provider.isSelectedNotEmpty
                   ? theme.textTheme.bodyText1?.color
