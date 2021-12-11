@@ -1719,15 +1719,21 @@ class DefaultAssetPickerBuilderDelegate
             }
           },
           child: Container(
-            margin: EdgeInsets.all(
-              context.mediaQuery.size.width / gridCount / 12,
+            width: MediaQueryData.fromWindow(ui.window).size.width / gridCount,
+            height: MediaQueryData.fromWindow(ui.window).size.width / gridCount,
+            child: Container(
+              margin: EdgeInsets.all(
+                MediaQueryData.fromWindow(ui.window).size.width /
+                    gridCount /
+                    (isAppleOS ? 12.0 : 15.0),
+              ),
+              width: isPreviewEnabled ? indicatorSize : null,
+              height: isPreviewEnabled ? indicatorSize : null,
+              alignment: AlignmentDirectional.topEnd,
+              child: (!isPreviewEnabled && isSingleAssetMode && !selected)
+                  ? const SizedBox.shrink()
+                  : innerSelector,
             ),
-            width: isPreviewEnabled ? indicatorSize : null,
-            height: isPreviewEnabled ? indicatorSize : null,
-            alignment: AlignmentDirectional.topEnd,
-            child: (!isPreviewEnabled && isSingleAssetMode && !selected)
-                ? const SizedBox.shrink()
-                : innerSelector,
           ),
         );
         if (isPreviewEnabled) {
