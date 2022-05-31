@@ -1,36 +1,12 @@
-///
-/// [Author] Alex (https://github.com/Alex525)
-/// [Date] 2020/3/31 16:02
-///
-import 'dart:developer';
+// Copyright 2019 The FlutterCandies author. All rights reserved.
+// Use of this source code is governed by an Apache license that can be found
+// in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/painting.dart';
+import 'package:photo_manager/photo_manager.dart';
 
-import '../delegates/assets_picker_text_delegate.dart';
-import '../delegates/sort_path_delegate.dart';
+/// Default theme color from WeChat.
+const Color defaultThemeColorWeChat = Color(0xff00bc56);
 
-class Constants {
-  const Constants._();
-
-  static GlobalKey pickerKey = GlobalKey();
-
-  static AssetsPickerTextDelegate textDelegate = AssetsPickerTextDelegate();
-  static SortPathDelegate<dynamic> sortPathDelegate = SortPathDelegate.common;
-
-  /// The last scroll position where the picker scrolled.
-  ///
-  /// See also:
-  ///  * [AssetPickerBuilderDelegate.keepScrollOffset]
-  static ScrollPosition? scrollPosition;
-
-  static const int defaultGridThumbSize = 200;
-}
-
-/// Log only in debug mode.
-/// 只在调试模式打印
-void realDebugPrint(dynamic message) {
-  if (!kReleaseMode) {
-    log('$message');
-  }
-}
+const ThumbnailSize defaultAssetGridPreviewSize = ThumbnailSize.square(200);
+const ThumbnailSize defaultPathThumbnailSize = ThumbnailSize.square(80);
