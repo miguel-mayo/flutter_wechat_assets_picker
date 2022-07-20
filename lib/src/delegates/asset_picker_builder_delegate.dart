@@ -153,6 +153,8 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   /// 选择器是否为单选模式
   bool get isSingleAssetMode;
 
+  // bool get isNoMaxMode => provider.maxAssets == 9999;
+
   /// Whether the delegate should build the special item.
   /// 是否需要构建自定义 item
   bool get shouldBuildSpecialItem =>
