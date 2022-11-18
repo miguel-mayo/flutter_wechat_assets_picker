@@ -736,7 +736,7 @@ class DefaultAssetPickerBuilderDelegate
   bool get isPreviewEnabled => specialPickerType != SpecialPickerType.noPreview;
 
   @override
-  bool get isSingleAssetMode => provider.maxAssets == 1;
+  bool get isSingleAssetMode => false; //provider.maxAssets == 1;
 
   /// The listener to track the scroll position of the [gridScrollController]
   /// if [keepScrollOffset] is true.
