@@ -745,7 +745,7 @@ class DefaultAssetPickerBuilderDelegate
   bool get isPreviewEnabled => specialPickerType != SpecialPickerType.noPreview;
 
   @override
-  bool get isSingleAssetMode => provider.maxAssets == 1;
+  bool get isSingleAssetMode => false; //provider.maxAssets == 1;
 
   /// The listener to track the scroll position of the [gridScrollController]
   /// if [keepScrollOffset] is true.
@@ -926,7 +926,7 @@ class DefaultAssetPickerBuilderDelegate
       //   because any click on an asset selects it.
       // - On iOS and macOS, show nothing.
       actions: <Widget>[
-        if (!isAppleOS && (isPreviewEnabled || !isSingleAssetMode))
+        if (!isAppleOS) // && (isPreviewEnabled || !isSingleAssetMode))
           confirmButton(context),
       ],
       actionsPadding: const EdgeInsetsDirectional.only(end: 14),
@@ -951,7 +951,7 @@ class DefaultAssetPickerBuilderDelegate
                         child: Column(
                           children: <Widget>[
                             Expanded(child: assetsGridBuilder(context)),
-                            if (!isSingleAssetMode && isPreviewEnabled)
+                            // if (!isSingleAssetMode && isPreviewEnabled)
                               bottomActionBar(context),
                           ],
                         ),
@@ -978,7 +978,7 @@ class DefaultAssetPickerBuilderDelegate
             child: Stack(
               children: <Widget>[
                 Positioned.fill(child: assetsGridBuilder(context)),
-                if (!isSingleAssetMode || isPreviewEnabled)
+                // if (!isSingleAssetMode || isPreviewEnabled)
                   Positioned.fill(
                     top: null,
                     child: bottomActionBar(context),
