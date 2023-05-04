@@ -114,12 +114,16 @@ See the [Migration Guide][] to learn how to migrate between breaking changes.
 
 ## READ THIS FIRST ‼️
 
-The package works closely with the [photo_manager][photo_manager pub] plugin,
-and most behaviors are controlled by the plugin.
-
-The most frequent APIs that used in the picker are:
-- [`AssetEntity`](https://pub.dev/documentation/photo_manager/latest/photo_manager/AssetEntity-class.html)
-- [`AssetPathEntity`](https://pub.dev/documentation/photo_manager/latest/photo_manager/AssetPathEntity-class.html)
+Be aware of below notices before you started anything:
+- Due to understanding differences and the limitation of a single document,
+  documents will not cover all the contents.
+  If you find nothing related to your expected features and cannot understand about concepts,
+  run the example project and check every options first.
+  It has covered 90% of regular requests with the package.
+- The package deeply integrates with the [photo_manager][photo_manager pub] plugin,
+  make sure you understand these two concepts as much as possible:
+  - Asset (photos/videos/audio) - [`AssetEntity`](https://pub.dev/documentation/photo_manager/latest/photo_manager/AssetEntity-class.html)
+  - Assets collection (albums/libraries) - [`AssetPathEntity`](https://pub.dev/documentation/photo_manager/latest/photo_manager/AssetPathEntity-class.html)
 
 When you have questions about related APIs and behaviors,
 check [photo_manager's API docs][] for more details.
@@ -199,7 +203,7 @@ consider declare only relevant permission in your apps, more specifically:
 
 1. Platform version has to be at least *11.0*.
    Modify `ios/Podfile` and update accordingly.
-   ```ruby
+   ```Podfile
    platform :ios, '11.0'
    ```
 2. Add the following content to `Info.plist`.
@@ -288,7 +292,7 @@ Fields in `AssetPickerConfig`:
 | selectPredicate                   | `AssetSelectPredicate`               | Predicate whether an asset can be selected or unselected.                                    | `null`                      |
 | shouldRevertGrid                  | `bool?`                              | Whether the assets grid should revert.                                                       | `null`                      |
 | limitedPermissionOverlayPredicate | `LimitedPermissionOverlayPredicate?` | Predicate whether the limited permission overlay should be displayed.                        | `null`                      |
-| pathNameBuilder                   | `PathNameBuilder<AssetPathEntity>?`  | Build customized path name.                                                                  | `null`                      |
+| pathNameBuilder                   | `PathNameBuilder<AssetPathEntity>?`  | Build customized path (album) name with the given path entity.                               | `null`                      |
 
 - When `maxAssets` equals to `1` (a.k.a. single picking mode),
   use `SpecialPickerType.noPreview` will immediately select asset
@@ -538,6 +542,7 @@ Many thanks to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dddrop"><img src="https://avatars.githubusercontent.com/u/5361175?v=4?s=50" width="50px;" alt="dddrop"/><br /><sub><b>dddrop</b></sub></a><br /><a href="https://github.com/fluttercandies/flutter_wechat_assets_picker/commits?author=dddrop" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/loinp"><img src="https://avatars.githubusercontent.com/u/34020090?v=4?s=50" width="50px;" alt="Nguyen Phuc Loi"/><br /><sub><b>Nguyen Phuc Loi</b></sub></a><br /><a href="#translation-nploi" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
