@@ -747,6 +747,8 @@ class DefaultAssetPickerBuilderDelegate
   @override
   bool get isSingleAssetMode => provider.maxAssets == 1;
 
+  bool get isNoLimitMode => provider.maxAssets == 9999;
+
   /// The listener to track the scroll position of the [gridScrollController]
   /// if [keepScrollOffset] is true.
   /// 当 [keepScrollOffset] 为 true 时，跟踪 [gridScrollController] 位置的监听。
@@ -1508,10 +1510,12 @@ class DefaultAssetPickerBuilderDelegate
               : null,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           child: ScaleText(
-            p.isSelectedNotEmpty && !isSingleAssetMode
+            p.isSelectedNotEmpty && !isSingleAssetMode && !isNoLimitMode
                 ? '${textDelegate.confirm}'
                     ' (${p.selectedAssets.length}/${p.maxAssets})'
-                : textDelegate.confirm,
+                : isNoLimitMode
+                    ? '${textDelegate.confirm} (${p.selectedAssets.length})'
+                    : textDelegate.confirm,
             style: TextStyle(
               color: p.isSelectedNotEmpty
                   ? theme.textTheme.bodyLarge?.color
@@ -1519,10 +1523,13 @@ class DefaultAssetPickerBuilderDelegate
               fontSize: 17,
               fontWeight: FontWeight.normal,
             ),
-            semanticsLabel: p.isSelectedNotEmpty && !isSingleAssetMode
-                ? '${semanticsTextDelegate.confirm}'
-                    ' (${p.selectedAssets.length}/${p.maxAssets})'
-                : semanticsTextDelegate.confirm,
+            semanticsLabel:
+                p.isSelectedNotEmpty && !isSingleAssetMode && !isNoLimitMode
+                    ? '${semanticsTextDelegate.confirm}'
+                        ' (${p.selectedAssets.length}/${p.maxAssets})'
+                    : isNoLimitMode
+                        ? '${textDelegate.confirm} (${p.selectedAssets.length})'
+                        : semanticsTextDelegate.confirm,
           ),
         );
       },
