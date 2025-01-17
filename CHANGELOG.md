@@ -9,7 +9,61 @@ that can be found in the LICENSE file. -->
 
 ## Unreleased
 
-*None.*
+### Fixes
+
+- Fixes semantics issues.
+
+## 9.4.2
+
+### Improvements
+
+- Add Traditional Chinese language text delegate. (Thanks to @Gasol)
+- Improves the default sort conditions on Android.
+
+## 9.4.1
+
+### Improvements
+
+- Improves the default sort conditions.
+
+### Fixes
+
+- Fixes selecting when reached the max asset limit in the preview.
+
+## 9.4.0
+
+### Improvements
+
+- Allows `extended_image: ^9.0.0`.
+
+### Fixes
+
+- Allows assets changing when no path previously.
+
+## 9.3.3
+
+### Fixes
+
+- Recovers the compatibility with Flutter 3.16.
+
+## 9.3.2
+
+### Improvements
+
+- Adapt the file type getter from the image provider to get a precise file type in grid.
+- Adds the identifier for grid item's semantics.
+- Improves preview page back button.
+
+## 9.3.1
+
+### Improvements
+
+- Do not mute the Live Photo during the preview.
+
+### Fixes
+
+- Fix the GIF indicator's layout.
+- Fix the directionality with the reverted grid item.
 
 ## 9.3.0
 
@@ -17,9 +71,15 @@ that can be found in the LICENSE file. -->
 
 - Add explicit Live Photos indicator for assets.
 
+### Improvements
+
+- Make Live Photos gesture consistent when scaling and panning.
+- Integrate `LocallyAvailableBuilder` with thumbnail options to improve the thumbnail loading speed.
+- Use `visibility_detector` and scroll observer to improve media playing experiences.
+
 ### Fixes
 
-- Fix bottom actions bar display conditions.
+- Fix the bottom actions bar display conditions.
 
 ## 9.2.2
 
@@ -35,8 +95,8 @@ that can be found in the LICENSE file. -->
 ### New features
 
 - Introduce `AssetsChangeCallback` and `AssetsChangeRefreshPredicate`
-  to help users act according to assets changes.
-- Add `shouldAutoplayPreview` in the config.
+  to help users act according to asset changes.
+- Add `shouldAutoplayPreview` to the picker config.
 
 ### Fixes
 
@@ -88,7 +148,7 @@ that can be found in the LICENSE file. -->
 
 ### Improvements
 
-- Improve code formatting. 
+- Improve code formatting.
 
 ## 9.0.0
 
@@ -118,7 +178,7 @@ that can be found in the LICENSE file. -->
 
 ### New features
 
-- Add Korean language support. (#494)
+- Add Korean language support. (Thanks to @LIMMIHEE)
 
 ### Improvements
 
@@ -172,7 +232,7 @@ that can be found in the LICENSE file. -->
 ### New features
 
 - Sync all UI details from WeChat 8.3.x. (#458)
-- Add Turkish language text delegate. (#331).
+- Add Turkish language text delegate. (Thanks to @cevheri).
 - Allow to confirm 0 assets if there are selected assets previously. (#461)
 
 ### Improvements
@@ -194,7 +254,7 @@ that can be found in the LICENSE file. -->
 
 ### New features
 
-- Add Vietnamese language text delegate. (#424).
+- Add Vietnamese language text delegate. (Thanks to @nploi).
 
 ### Improvements
 
@@ -842,7 +902,7 @@ To know more about breaking changes, see [Migration Guide][].
 
 ## 1.4.1
 
-- Remove the loading indicator for the  image widget.
+- Remove the loading indicator for the image widget.
 - Refactor the video page's initialization for ratio update.
 - Using constants to store text delegate.
 - Add error catching for main methods.
